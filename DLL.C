@@ -1,20 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+#include<stdio.h>
+#include<stdlib.h>
 struct node
 {
 	int data;
 	struct node *next;
 	struct node *prev;
 };
-
 struct node *head=NULL;
-
-void insert_beg()
+void insertleft()
 {
 	 struct node *new_node;
 	 new_node=(struct node*)malloc(sizeof(struct node));
-	 printf("Enter the number you want to insert : \n");
+	 printf("Enter the number: \n");
 	 scanf("%d",&new_node->data);
 	 new_node->next=NULL;
 	 new_node->prev=NULL;
@@ -22,25 +19,63 @@ void insert_beg()
 	 if(head==NULL)
 	 {
 			head=new_node;
-      printf("Element INSERTED!!\n");
 	 }
 	 else
 	 {
 			new_node->next=head;
 			head->prev=new_node;
 			head=new_node;
-      printf("Element INSERTED!!\n");
 	 }
+
 }
 
-void insert_left()
+
+
+void del()
+{
+	struct node *temp;
+	int elem;
+    if(head==NULL)
+    {
+        printf("Empty List \n");
+        return;
+    }
+	printf("Enter the element to be deleted\n");
+	scanf("%d",&elem);
+	temp=head;
+	while(temp->data!=elem)
+	{
+		temp=temp->next;
+		if(temp==NULL)
+		{
+		 printf("Element is not in the list\n");
+		 return;
+		}
+	 }
+	 if(temp==head)
+	 {
+		 head=head->next;
+	 }
+	 else if(temp->next==NULL)
+	 {
+			temp=temp->prev;
+			temp->next=NULL;
+	 }
+
+	 else
+	 {
+		 temp->prev->next=temp->next;
+		 temp->next->prev=temp->prev;
+	 }
+}
+void insert_betweenL()
 {
 	int listele;
 	struct node *new_node,*temp;
-	printf("Enter the element in the list : \n");
+	printf("Enter the element in the list\n");
 	scanf("%d",&listele);
 	new_node=(struct node*)malloc(sizeof(struct node));
-	printf("Enter the new node data : \n");
+	printf("Enter the new node data\n");
 	scanf("%d",&new_node->data);
 	new_node->next=NULL;
 	new_node->prev=NULL;
@@ -58,20 +93,20 @@ void insert_left()
 			return;
 		}
 	}
-  new_node->prev=temp->prev;
+	new_node->prev=temp->prev;
 	temp->prev=new_node;
 	new_node->next=temp;
 	new_node->prev->next=new_node;
 }
 
-void insert_right()
+void insert_betweenR()
 {
-  int listele;
+	int listele;
 	struct node *new_node,*temp;
-	printf("Enter the element in the list :\n");
+	printf("Enter the element in the list\n");
 	scanf("%d",&listele);
 	new_node=(struct node*)malloc(sizeof(struct node));
-	printf("Enter the new node data : \n");
+	printf("Enter the new node data\n");
 	scanf("%d",&new_node->data);
 	new_node->next=NULL;
 	new_node->prev=NULL;
@@ -94,79 +129,10 @@ void insert_right()
 	new_node->prev=temp;
 	new_node->next->prev=new_node;
 }
-
-void insert_end()
-{
-	struct node *new_node,*temp;
-	new_node=(struct node*)malloc(sizeof(struct node));
-	printf("Enter the number you want to insert : \n");
-	scanf("%d",&new_node->data);
-	new_node->next=NULL;
-	new_node->prev=NULL;
-	if(head==NULL)
-	{
-		head=new_node;
-	}
-	else
-	{
-		 temp=head;
-		 while(temp->next!=NULL)
-		 temp=temp->next;
-		 temp->next=new_node;
-		 new_node->prev=temp;
-	}
-}
-
-void del()
-{
-	struct node *temp;
-	int ele;
-  if(head==NULL)
-  {
-      printf("EMPTY LIST!!\n");
-      return;
-  }
-	printf("Enter the element to be deleted :\n");
-	scanf("%d",&ele);
-	temp=head;
-	while(temp->data!=ele)
-	{
-		temp=temp->next;
-		if(temp==NULL)
-		{
-		 printf("Element is NOT FOUND in the list!!\n");
-		 return;
-		}
-	 }
-	 if(temp==head)
-	 {
-		 head=head->next;
-     printf("Element is DELETED!!\n");
-	 }
-	 else if(temp->next==NULL)
-	 {
-			temp=temp->prev;
-			temp->next=NULL;
-      printf("Element is DELETED!!\n");
-	 }
-	 else
-	 {
-		 temp->prev->next=temp->next;
-		 temp->next->prev=temp->prev;
-     printf("Element is DELETED!!\n");
-	 }
-}
-
 void display()
 {
 	 struct node *temp;
 	 temp=head;
-   if(temp==NULL)
-   {
-        printf("Nothing to print!! EMPTY LIST!!\n");
-        return;
-   }
-   printf("CONTENTS OF THE LIST ARE : \n");
 	 while(temp!=NULL)
 	 {
 		 printf("%d\t",temp->data);
@@ -175,33 +141,29 @@ void display()
 	 printf("\n");
 }
 
+
 int main()
 {
 	int choice;
-	 do
+	 while(1)
 	 {
-      printf("\n-----MENU------\n");
-      printf(" 1. Insert at the beg \n");
-      printf(" 2. Insert at the left \n");
-      printf(" 3. Insert at the right \n");
-      printf(" 4. Insert at the end \n");
-			printf(" 5. Delete \n");
-			printf(" 6. Display\n");
-			printf(" 7. Exit\n");
-			printf("\nEnter your choice : \n");
+      
+			printf(" 1. Insert to the left in the beginning \n");
+			printf(" 2.insert a node before a given node\n");
+			printf(" 3.insert a node after a given node\n");
+			printf(" 4. delete \n");
+			printf(" 5. display\n");
+			printf(" 6. exit\n");
+			printf("\nEnter your choice: \n");
 			scanf("%d",&choice);
 			switch(choice)
 			{
-         case 1 : insert_beg(); break;
-				 case 2 : insert_left(); break;
-         case 3 : insert_right(); break;
-         case 4 : insert_end(); break;
-				 case 5 : del(); break;
-				 case 6 : display(); break;
-				 case 7 : break;
-         default : printf("Enter your choice CORRECTLY!!\n"); break;
+				 case 1: insertleft(); break;
+				 case 2:insert_betweenL();break;
+				 case 3:insert_betweenR();break;
+				 case 4: del(); break;
+				 case 5: display(); break;
+				 case 6: exit(0);
 			}
 	 }
-   while(choice != 7);
-   return 0;
 }
